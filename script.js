@@ -369,18 +369,22 @@ predictBtn.addEventListener('click', function () {
       revealTile(tileIndex);
     }, order * 300);
   });
+setTimeout(function () {
+
+  hashInput.value = "";
+  isVerified = false;
+  currentConfig = null;
+
+  verifyBtn.classList.remove("verified", "loading");
+  verifyBtn.textContent = "Verify";
+  verifyBtn.disabled = true;
+
+  predictBtn.disabled = true;
+  predictBtn.textContent = "Predict";
+
+}, (currentConfig.diamonds * 300) + 1000);
 });
-// After prediction, clear hash and reset verification
-hashInput.value = "";
-isVerified = false;
-currentConfig = null;
 
-verifyBtn.classList.remove("verified", "loading");
-verifyBtn.textContent = "Verify";
-verifyBtn.disabled = true;
-
-predictBtn.disabled = true;
-predictBtn.textContent = "Predict";
 
 /* ============================================================
    REVEAL TILE
