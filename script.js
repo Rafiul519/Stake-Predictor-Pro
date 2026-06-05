@@ -370,7 +370,17 @@ predictBtn.addEventListener('click', function () {
     }, order * 300);
   });
 });
+// After prediction, clear hash and reset verification
+hashInput.value = "";
+isVerified = false;
+currentConfig = null;
 
+verifyBtn.classList.remove("verified", "loading");
+verifyBtn.textContent = "Verify";
+verifyBtn.disabled = true;
+
+predictBtn.disabled = true;
+predictBtn.textContent = "Predict";
 
 /* ============================================================
    REVEAL TILE
