@@ -1,0 +1,563 @@
+/* ============================================================
+   MINES PREDICTOR PRO — style.css
+   Colors, layout, and component styles
+   Based on user's existing CSS color palette & design system
+============================================================ */
+
+
+/* ========================
+   RESET & BASE
+======================== */
+* {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rgb(26, 44, 56); /* outer page background */
+  min-height: 100vh;
+}
+
+
+/* ========================
+   HEADER SECTION
+   Background image layer behind logo + title
+======================== */
+.header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  margin: 10px 5px 0 5px;
+  min-height: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Background image layer — sits behind all header content */
+.header-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("header-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Dark overlay on top of background image for text readability */
+.header-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Foreground content — above the background layer */
+.header-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+}
+
+/* Logo container */
+.header-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: transparent; /* FIX: was 'none' — not a valid CSS value */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Title block — right side of header */
+.header-title {
+  text-align: right;
+  flex: 1;
+  padding-left: 12px;
+}
+
+.app-title {
+  font-size: 25px;
+  font-weight: 700;
+  color: rgb(20, 117, 221);
+  letter-spacing: 0.5px;
+}
+
+.app-subtitle {
+  font-size: 11px;
+  color: rgba(170, 185, 198, 0.6);
+  margin-top: 3px;
+}
+
+
+/* ========================
+   MAIN WRAPPER
+   Wraps grid + controls below header
+======================== */
+.main-wrapper {
+  margin: 0 5px;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+
+/* ========================
+   5x5 GRID SECTION
+======================== */
+.app {
+  background-color: rgb(15, 33, 47);
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+}
+
+
+/* ========================
+   TILE STYLES
+   FIX: merged two separate .tile blocks into one
+======================== */
+.tile {
+  background: rgb(47, 69, 83);
+  border-radius: 5px;
+  box-shadow: 0 3px 0 rgb(33, 55, 68);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  cursor: default;
+  transition: background 0.25s ease, transform 0.15s ease;
+  user-select: none;
+
+  /* FIX: was in a separate duplicate .tile block below */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diamond PNG shown inside a revealed tile */
+.diamond-img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  display: block;
+}
+
+/* GIF popup — shown inside the tile (not body) */
+.diamond-gif-popup {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Tile revealed state — dark tint + pop animation */
+.tile.revealed {
+  background: rgb(7, 23, 36);
+  /* FIX: rgba() requires 4 values — added missing alpha */
+  box-shadow: 0 3px 0 rgb(7, 23, 36), 0 0 10px rgba(7, 23, 36, 0.8);
+  animation: popIn 0.3s ease forwards;
+}
+
+/* Pop-in animation for revealed tiles */
+@keyframes popIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+
+/* ========================
+   FUNCTION / CONTROLS SECTION
+   Below the grid
+======================== */
+.function {
+  background-color: rgb(33, 55, 68);
+  padding: 14px 12px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+/* ========================
+   PREDICT BUTTON (blue — user's design)
+======================== */
+.buttonmain {
+  background-color: rgb(20, 117, 221);
+  height: 43px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  color: rgb(255, 245, 255);
+  letter-spacing: 0.4px;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  margin-bottom: 12px;
+}
+
+.buttonmain:disabled {
+  opacity: 0.50;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.buttonmain:not(:disabled):hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.buttonmain:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+
+/* ========================
+   LABEL TEXT
+   Small labels above input / result boxes
+======================== */
+.text {
+  color: rgba(170, 185, 198, 1);
+  font-size: 13px;
+  padding-bottom: 6px;
+  padding-top: 4px;
+}
+
+
+/* ========================
+   HASH INPUT WRAPPER
+======================== */
+.money {
+  background-color: rgb(47, 69, 83);
+  height: 43px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  margin-bottom: 10px;
+}
+
+/* Text input field inside the wrapper */
+.input {
+  background-color: rgb(15, 33, 47);
+  color: white;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding-left: 10px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: rgba(170, 185, 198, 0.5);
+}
+
+
+/* ========================
+   VERIFY BUTTON
+======================== */
+.verify-btn {
+  background-color: rgb(47, 69, 83);
+  color: rgba(200, 210, 220, 1);
+  height: 43px;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  transition: background 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.verify-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.verify-btn:not(:disabled):hover {
+  background-color: rgb(58, 82, 98);
+  transform: translateY(-1px);
+}
+
+.verify-btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* Loading state while verifying */
+.verify-btn.loading {
+  opacity: 0.7;
+  cursor: wait;
+  background-color: rgb(40, 65, 82);
+}
+
+/* Success state after verified */
+.verify-btn.verified {
+  background-color: rgb(20, 50, 35);
+  color: rgb(0, 231, 1);
+  cursor: default;
+}
+
+
+/* ========================
+   RESULTS SECTION
+   Hidden until verified — shown by JS
+======================== */
+.results-section {
+  display: none;
+  margin-top: 10px;
+  animation: fadeSlideIn 0.4s ease forwards;
+}
+
+/* Smooth reveal animation */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Label above Mines / Gems boxes */
+.textgems {
+  color: rgba(160, 175, 188, 1);
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* Mines / Gems value box */
+.gems {
+  background-color: rgb(47, 69, 83);
+  color: rgba(200, 210, 220, 1);
+  height: 43px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Label above Expected Profit */
+.textgain {
+  color: rgba(160, 175, 188, 1);
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* Expected Profit value box */
+.gainbox {
+  background-color: rgb(47, 69, 83);
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  border-radius: 7px;
+}
+
+/* Profit value text — green */
+.gain {
+  color: rgb(0, 231, 1);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* ========================
+   WARNING BANNER
+   Orange gradient — shown inside results
+======================== */
+.warning-box {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ffb300, #ff6f00);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.warning-box a {
+  color: #fff;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+
+/* ========================
+   DAILY LIMIT POPUP MODAL
+   Overlay + centered box
+======================== */
+.custom-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none; /* shown by JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-box {
+  background: rgb(15, 33, 47);
+  color: white;
+  width: 85%;
+  max-width: 320px;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.popup-box p {
+  font-size: 13px;
+  color: rgba(220, 225, 230, 0.9);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* FIX: was '.popup-box link' — 'link' is not a valid element. Changed to 'a' */
+.popup-box a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #00e701;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.popup-box a:hover {
+  text-decoration: underline;
+}
+
+.popup-box button {
+  display: block;
+  margin: 10px auto 0;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #00e701;
+  color: #0a1a0a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* ========================
+   VERIFY WARNING POPUP MODAL
+   Referral warning shown on verify click
+======================== */
+.verify-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: none; /* shown by JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.verify-popup-box {
+  background: rgb(15, 33, 47);
+  color: white;
+  width: 85%;
+  max-width: 330px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(255, 174, 0, 0.35);
+}
+
+.verify-popup-box p {
+  font-size: 13px;
+  color: rgba(230, 230, 230, 0.9);
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.verify-popup-box button {
+  margin-top: 14px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 7px;
+  background: #ffae00;
+  color: #1a0f00;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Register Now link inside verify popup */
+.register-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 18px;
+  border-radius: 6px;
+  background: rgb(20, 117, 221);
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.register-link:hover {
+  opacity: 0.85;
+}
+
+/* Blinking warning title */
+.warning-title {
+  color: #ffae00;
+  font-weight: 800;
+  animation: warningBlink 1s infinite;
+}
+
+@keyframes warningBlink {
+  0%   { opacity: 1;   transform: scale(1);    }
+  50%  { opacity: 0.4; transform: scale(1.05); }
+  100% { opacity: 1;   transform: scale(1);    }
+}
+
+
+/* ========================
+   RESPONSIVE
+   Tablet and wider screens
+======================== */
+@media (min-width: 420px) {
+  .app {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .app-title {
+    font-size: 22px;
+  }
+}

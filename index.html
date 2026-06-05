@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mines Predictor Pro</title>
+
+  <!-- External stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========================
+       HEADER SECTION
+       Background image behind content
+       Logo left, title right
+  ======================== -->
+  <header class="header">
+
+    <!-- Background PNG layer (set in CSS via header-bg.png) -->
+    <div class="header-bg"></div>
+
+    <!-- Foreground content: logo + title -->
+    <div class="header-content">
+
+      <div class="header-logo">
+        <img src="logo.png" alt="Mines Predictor Pro Logo" class="logo-img" />
+      </div>
+
+      <div class="header-title">
+        <h1 class="app-title">Mines Predictor Pro</h1>
+        <p class="app-subtitle">See the Results · Then Believe</p>
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- ========================
+       MAIN WRAPPER
+       Holds the grid and all controls
+  ======================== -->
+  <main class="main-wrapper">
+
+    <!-- ========================
+         5x5 GRID SECTION
+         25 tiles, each with a data-index for JS targeting
+    ======================== -->
+    <section class="app" id="grid-section" aria-label="Prediction Grid">
+
+      <!-- Row 1 -->
+      <div class="tile" data-index="0"></div>
+      <div class="tile" data-index="1"></div>
+      <div class="tile" data-index="2"></div>
+      <div class="tile" data-index="3"></div>
+      <div class="tile" data-index="4"></div>
+
+      <!-- Row 2 -->
+      <div class="tile" data-index="5"></div>
+      <div class="tile" data-index="6"></div>
+      <div class="tile" data-index="7"></div>
+      <div class="tile" data-index="8"></div>
+      <div class="tile" data-index="9"></div>
+
+      <!-- Row 3 -->
+      <div class="tile" data-index="10"></div>
+      <div class="tile" data-index="11"></div>
+      <div class="tile" data-index="12"></div>
+      <div class="tile" data-index="13"></div>
+      <div class="tile" data-index="14"></div>
+
+      <!-- Row 4 -->
+      <div class="tile" data-index="15"></div>
+      <div class="tile" data-index="16"></div>
+      <div class="tile" data-index="17"></div>
+      <div class="tile" data-index="18"></div>
+      <div class="tile" data-index="19"></div>
+
+      <!-- Row 5 -->
+      <div class="tile" data-index="20"></div>
+      <div class="tile" data-index="21"></div>
+      <div class="tile" data-index="22"></div>
+      <div class="tile" data-index="23"></div>
+      <div class="tile" data-index="24"></div>
+
+    </section>
+
+    <!-- ========================
+         CONTROLS / FUNCTION SECTION
+         Predict button, hash input, verify, results
+    ======================== -->
+    <section class="function">
+
+      <!-- Predict Button — disabled until verified -->
+      <button class="buttonmain" id="predict-btn" disabled>
+        Predict
+      </button>
+
+      <!-- Hash / Client Seed Input -->
+      <div class="text">
+        <span>Active Client Seed</span>
+      </div>
+      <div class="money">
+        <input
+          class="input"
+          id="hash-input"
+          type="text"
+          placeholder="Enter the Active Client Seed"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+
+      <!-- Verify Button — disabled until input has text -->
+      <button class="verify-btn" id="verify-btn" disabled>
+        Verify
+      </button>
+
+      <!-- ========================
+           RESULTS SECTION
+           Hidden by default, shown after verification
+      ======================== -->
+      <div class="results-section" id="results-section">
+
+        <!-- Premium notice banner -->
+        <div class="warning-box">
+          ⚡ Premium Access: Works best with accounts created through our
+          <a href="https://stake.com/?c=Q5YTY7Ln" target="_blank" rel="noopener noreferrer">official link</a>.
+        </div>
+
+        <!-- Mines result -->
+        <div class="textgems">Mines</div>
+        <div class="gems" id="result-mines">
+          <span id="mines-value">—</span>
+        </div>
+
+        <!-- Gems result -->
+        <div class="textgems">Gems</div>
+        <div class="gems" id="result-gems">
+          <span id="gems-value">—</span>
+        </div>
+
+        <!-- Expected Profit result -->
+        <div class="textgain">Expected Profit</div>
+        <div class="gainbox" id="result-profit">
+          <span class="gain" id="profit-value">—</span>
+        </div>
+
+      </div>
+      <!-- end results-section -->
+
+    </section>
+    <!-- end function -->
+
+  </main>
+  <!-- end main-wrapper -->
+
+
+  <!-- ========================
+       DAILY LIMIT POPUP MODAL
+       Shown when user has used today's prediction
+       Moved to body — modals must NOT be inside sections
+  ======================== -->
+  <div id="custom-popup" class="custom-popup" role="dialog" aria-modal="true" aria-labelledby="limit-popup-title">
+    <div class="popup-box">
+      <h3 id="limit-popup-title">⚡ Daily Limit Reached</h3>
+
+      <p>Today's prediction has already been used.</p>
+
+      <p>
+        🔥 For more updates and bonus predictions,
+        join our Telegram channel.
+      </p>
+
+      <a href="https://t.me/StakeOfficialPredict" target="_blank" rel="noopener noreferrer">
+        Join Telegram
+      </a>
+
+      <!-- id="close-limit-popup" — JS handles this, no inline onclick -->
+      <button id="close-limit-popup">OK</button>
+    </div>
+  </div>
+
+
+  <!-- ========================
+       VERIFY WARNING POPUP MODAL
+       Shown when Verify is clicked — referral warning
+       Moved to body — modals must NOT be inside sections
+  ======================== -->
+  <div id="verify-popup" class="verify-popup" role="dialog" aria-modal="true" aria-labelledby="verify-popup-title">
+    <div class="verify-popup-box">
+
+      <h3 class="warning-title" id="verify-popup-title">⚠️ WARNING / चेतावनी</h3>
+
+      <p>
+        This predictor works only for users who created their Stake account
+        through our official referral link.
+      </p>
+
+      <p>
+        यह Predictor केवल उन्हीं उपयोगकर्ताओं के लिए है जिन्होंने अपना
+        Stake अकाउंट हमारे आधिकारिक रेफरल लिंक से बनाया है।
+      </p>
+
+      <!-- id="close-verify-popup" — JS handles this, no inline onclick -->
+      <button id="close-verify-popup">I Understand</button>
+
+      <a href="https://stake.com/?c=Q5YTY7Ln" target="_blank" rel="noopener noreferrer" class="register-link">
+        Register Now
+      </a>
+
+    </div>
+  </div>
+
+
+  <!-- External JavaScript — loaded at end of body -->
+  <script src="script.js"></script>
+
+</body>
+</html>
